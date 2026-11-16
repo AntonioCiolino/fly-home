@@ -1,0 +1,28 @@
+{
+  "source": "FlyWire FAFB v783 · oviIN → oviDNa_b",
+  "nodes": [
+    "720575940625741287",
+    "720575940621257340"
+  ],
+  "input": "720575940625741287",
+  "output": "720575940621257340",
+  "edges": [
+    [
+      "720575940625741287",
+      "720575940621257340",
+      -1
+    ]
+  ],
+  "evidence": [
+    {
+      "neuropil": "SMP_L",
+      "syn_count": 10,
+      "nt_type": "GABA"
+    },
+    {
+      "neuropil": "SMP_R",
+      "syn_count": 5,
+      "nt_type": "GABA"
+    }
+  ]
+}
