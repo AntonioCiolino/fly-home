@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLY-HOME-01</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101a17;color:#e7ede1;font:16px system-ui,sans-serif}
+main{max-width:880px;margin:auto;padding:32px 20px}h1{font-size:clamp(32px,7vw,58px);margin:0;letter-spacing:-.06em}
+p{color:#becbc2;line-height:1.45}header{border-bottom:1px solid #36483e;margin-bottom:22px}
+section{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:20px}aside{padding:16px;background:#1a2721;border-radius:9px}
+canvas{display:block;width:100%;height:auto;background:#14221c;border:1px solid #41594c;border-radius:8px}
+label,select{display:block;margin:8px 0 12px}select,button{font:inherit;color:#e7ede1;background:#2b4337;border:1px solid #567364;border-radius:5px;padding:8px}
+button{cursor:pointer}input[type=range]{width:100%;accent-color:#8ccd9c}strong,output{color:#d0f2aa}
+.legend{font-size:.88rem}.fly{color:#eef0dc}.food{color:#f2b85d}.cue{color:#8ccd9c}
+@media(max-width:660px){section{grid-template-columns:1fr}main{padding:22px 14px}}
+</style>
+<main>
+  <header><h1>FLY-HOME-01</h1><p>Watch 20 simulated fruit flies as food, learning, and chemical cues shape where they move.</p></header>
+  <div id="live">
+    <p><button id="live-play">Pause</button> <button id="live-reset">Reset</button></p>
+    <label>Tap a cell to place
+      <select id="stimulus">
+        <option value="food">Food</option>
+        <option value="substrate">Soft, moist substrate</option>
+        <option value="cue">Chemical pulse</option>
+      </select>
+    </label>
+    <label><input id="live-learning" type="checkbox" checked> Individual learning</label>
+    <p><button id="dm1" type="button">Run FlyWire DM1</button> <button id="baseline" type="button">Use baseline</button> <a href="flywire-dm1.json" download style="color:#d0f2aa">Download circuit JSON</a></p>
+    <label>FlyWire circuit JSON <input id="circuit" type="file" accept=".json"></label>
+    <p id="engine" role="status">Loading FlyWire DM1…</p>
+    <label><input id="reproduction" type="checkbox" checked> Allow new mating events</label>
+    <label><input id="flywire-mating" type="checkbox"> Use FlyWire VA1v for mating</label>
+    <label><input id="male-pursuit" type="checkbox" checked disabled> Male CNS pursuit</label>
+    <p id="pursuit-status" role="status">Loading male pursuit circuit…</p>
+    <label><input id="mating-cues" type="checkbox" checked> Mating chemical cues</label>
+    <p id="mating-cue-status"></p>
+    <p><button id="return-probe" type="button">Clear food and odors to test returns</button></p>
+    <p id="probe-status"></p>
+    <p id="courtship" role="status">Baseline mating · 5% per eligible tick</p>
+    <p id="population"></p>
+    <p id="expiry"></p>
+    <label><input id="substrate-steering" type="checkbox" checked> Female substrate steering</label>
+    <p id="laying" role="status">Loading FlyWire egg-laying circuit…</p>
+    <p>Females carrying an egg <output id="pending-eggs">0</output></p>
+    <p id="signal"></p>
+    <p>32 × 32 cells · Step <output id="live-step">0</output></p>
+    <canvas id="live-grid" width="640" height="640" aria-label="Live fly arena"></canvas>
+    <p class="legend"><span style="color:#f5bde7">● Female</span> · <span style="color:#b1dcff">■ Male</span> · <span style="color:#f7ff85">◆ Young adult</span> · Amber = food odor · Green = chemical pulse · Blue = mating cue · Purple outline = soft, moist substrate</p>
+  </div>
+</main>
+<script src="live.js"></script>
+</html>
