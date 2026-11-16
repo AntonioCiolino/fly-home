@@ -2,14 +2,7 @@
   const get = id => document.getElementById(id);
   const canvas = get('live-grid');
   const ctx = canvas.getContext('2d');
-  const size = 32;
-  const count = size ** 2;
-  const adjacent = Array.from({length: count}, (_, cell) => [
-    ...(cell % size ? [cell - 1] : []),
-    ...(cell % size < size - 1 ? [cell + 1] : []),
-    ...(cell >= size ? [cell - size] : []),
-    ...(cell < count - size ? [cell + size] : [])
-  ]);
+  let size, count, adjacent, directionOffsets;
   const populationLimit = 80;
   const freshFood = 3;
   const spoiledFood = freshFood / 4;
@@ -119,6 +112,8 @@
   }
 
   function reset() {
+    const center = Math.floor(size / 2);
+    const centerCell = center + center * size;
     brood = [];
     matingCue = new Float64Array(count);
     visits = new Map();
@@ -135,9 +130,9 @@
     ));
     field = new Float64Array(count);
     foodOdor = new Float64Array(count);
-    food = new Map([[16 + 16 * size, freshFood]]);
+    food = new Map([[centerCell, freshFood]]);
     for (const [cell, strength] of food) foodOdor[cell] = strength;
-    selectedCell = 16 + 16 * size;
+    selectedCell = centerCell;
     recordVisits();
     draw();
   }
@@ -199,7 +194,6 @@
   }
 
   // Clockwise sensory channels in arena coordinates: north, east, south, west.
-  const directionOffsets = [-size, 1, size, -1];
 
   function sense(fly, femaleCells) {
     const here = fly.cell;
@@ -389,7 +383,24 @@
     get('live-play').textContent = running ? 'Pause' : 'Play';
   }
 
-  reset();
+  const sizeControl = get('arena-size');
+  function resizeArena() {
+    size = Number(sizeControl.value);
+    count = size ** 2;
+    directionOffsets = [-size, 1, size, -1];
+    adjacent = Array.from({length: count}, (_, cell) => [
+      ...(cell % size ? [cell - 1] : []),
+      ...(cell % size < size - 1 ? [cell + 1] : []),
+      ...(cell >= size ? [cell - size] : []),
+      ...(cell < count - size ? [cell + size] : [])
+    ]);
+    canvas.width = canvas.height = size * 20;
+    get('arena-dimensions').textContent = size + ' × ' + size;
+    reset();
+  }
+
+  sizeControl.onchange = resizeArena;
+  resizeArena();
   setRunning(true);
   get('return-probe').onclick = startReturnProbe;
   get('mating-cues').onchange = () => {
