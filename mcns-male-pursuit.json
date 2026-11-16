@@ -1,0 +1,54 @@
+{
+  "source": "Janelia Male CNS v1.0 · VA1v to pC1",
+  "nodes": [
+    "86031",
+    "12667",
+    "15920",
+    "15329"
+  ],
+  "input": "86031",
+  "output": "15329",
+  "edges": [
+    [
+      "86031",
+      "12667",
+      1
+    ],
+    [
+      "12667",
+      "15920",
+      0.8
+    ],
+    [
+      "15920",
+      "15329",
+      0.7
+    ]
+  ],
+  "cellTypes": {
+    "12667": "VA1v_adPN",
+    "15329": "pC1_2a",
+    "15920": "LHAV2b2_d",
+    "86031": "ORN_VA1v"
+  },
+  "evidence": [
+    {
+      "from": "86031",
+      "to": "12667",
+      "synapses": 62,
+      "presynapticTransmitter": "acetylcholine"
+    },
+    {
+      "from": "12667",
+      "to": "15920",
+      "synapses": 24,
+      "presynapticTransmitter": "acetylcholine"
+    },
+    {
+      "from": "15920",
+      "to": "15329",
+      "synapses": 14,
+      "presynapticTransmitter": "acetylcholine"
+    }
+  ]
+}
